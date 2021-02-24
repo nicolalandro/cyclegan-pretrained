@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 EPOCHS=200
-DATASET="/home/super/Datasets/vangogh2photo"
+DATASET="/home/super/datasets/vangogh2photo"
 OUTPUT="/home/super/Models/cyclegan/vangogh"
 GPU=0
 
