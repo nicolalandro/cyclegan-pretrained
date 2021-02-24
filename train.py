@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 
 # fix for python 3.6
 try:
-    import src
+    import cyclegan
 except:
     import sys
 
