@@ -7,6 +7,14 @@ from PIL import Image
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 
+# fix for python 3.6
+try:
+    import src
+except:
+    import sys
+
+    sys.path.insert(0, './')
+
 from cyclegan import Discriminator
 from cyclegan import Generator
 from datasets import ImageDataset
