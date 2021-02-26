@@ -23,6 +23,13 @@ parser.add_argument('--image-path', type=str, default='image.jpg', help='image')
 parser.add_argument('--generator_B2A', type=str,
                     default='/media/mint/Barracuda/Models/cyclegan/monet/downloaded/netG_B2A.pth',
                     help='B2A generator checkpoint file')
+
+img = Image.open('./images/scala_madonnina_del_mare.jpeg')
+print(img.size)
+scale_factor = 0.8
+shape = [int(x * scale_factor) for x in img.size]
+print('original_shape:', img.size, 'scaled shape:', shape, f'(Scaled Factor: {scale_factor})')
+shape = [shape[1], shape[0]]
 opt = parser.parse_args()
 print(opt)
 
@@ -41,18 +48,17 @@ netG_B2A.eval()
 
 # Inputs & targets memory allocation
 Tensor = torch.cuda.FloatTensor if cuda_available else torch.Tensor
-input_B = Tensor(1, 3, 256, 256)
+input_B = Tensor(1, 3, shape[0], shape[1])
 
 # Dataset loader
 transform_test = transforms.Compose([
-    transforms.Resize(size=(256, 256)),
+    transforms.Resize(size=(shape[0], shape[1])),
     transforms.ToTensor(),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
 
 # url = 'https://raw.githubusercontent.com/nicolalandro/ntsnet-cub200/master/images/nts-net.png'
 # img = Image.open(urllib.request.urlopen(url))
-img = Image.open('./images/photo.jpg')
 scaled_img = transform_test(img)
 
 torch_image_B = scaled_img.unsqueeze(0)
@@ -67,4 +73,4 @@ with torch.no_grad():
     fake_A = 0.5 * (netG_B2A(real_B).data + 1.0)
 
     # Save image files
-    save_image(fake_A, 'images/A.png')
+    save_image(fake_A, 'images/A2.png')
