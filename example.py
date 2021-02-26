@@ -20,7 +20,8 @@ from cyclegan import Generator
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--image-path', type=str, default='image.jpg', help='image')
-parser.add_argument('--generator_B2A', type=str, default='/media/mint/Barracuda/Models/cyclegan/vangog/netG_B2A.pth',
+parser.add_argument('--generator_B2A', type=str,
+                    default='/media/mint/Barracuda/Models/cyclegan/monet/downloaded/netG_B2A.pth',
                     help='B2A generator checkpoint file')
 opt = parser.parse_args()
 print(opt)
