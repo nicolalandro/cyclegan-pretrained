@@ -19,12 +19,12 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('--image-path', type=str, default='image.jpg', help='image')
 parser.add_argument('--generator_B2A', type=str,
-                    default='/media/mint/Barracuda/Models/cyclegan/monet/downloaded/netG_B2A.pth',
+                    default='/media/mint/Barracuda/Models/cyclegan/vangog/downloaded/netG_B2A.pth',
                     help='B2A generator checkpoint file')
 
 img = Image.open('./images/scala_madonnina_del_mare.jpeg')
 print(img.size)
-scale_factor = 0.8
+scale_factor = 0.25
 shape = [int(x * scale_factor) for x in img.size]
 print('original_shape:', img.size, 'scaled shape:', shape, f'(Scaled Factor: {scale_factor})')
 shape = [shape[1], shape[0]]
