@@ -20,7 +20,7 @@ def cyclegan(pretrained=None, device='cpu'):
     net = Generator(3, 3)
     if device == 'cuda':
         net.cuda()
-    net.trained_models_list = [k for k, v in model_urls]
+    net.trained_models_list = [k for k in model_urls.keys()]
 
     if pretrained is not None:
         net.load_state_dict(
