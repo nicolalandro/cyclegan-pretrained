@@ -35,6 +35,7 @@ print(opt)
 netG_B2A = Generator(3, 3)
 
 cuda_available = torch.cuda.is_available()
+# cuda_available = False
 
 device = torch.device('cpu')
 if cuda_available:
@@ -43,6 +44,14 @@ if cuda_available:
 
 # Load state dicts
 netG_B2A.load_state_dict(torch.load(opt.generator_B2A, map_location=device))
+# netG_B2A.load_state_dict(
+#             torch.hub.load_state_dict_from_url(
+#                 'https://github.com/nicolalandro/cyclegan_pretrained/releases/download/0.1/netG_B2A_cezanne.pth',
+#                 progress=True,
+#                 map_location=torch.device(device)
+#             )
+#         )
+print('loaded...')
 
 # Set model's test mode
 netG_B2A.eval()
