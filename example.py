@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('--image-path', type=str, default='image.jpg', help='image')
 parser.add_argument('--generator_B2A', type=str,
-                    default='/media/mint/Barracuda/Models/cyclegan/vangog/downloaded/netG_B2A.pth',
+                    default='/media/mint/Barracuda/Models/cyclegan/cezanne/downloaded/netG_B2A.pth',
                     help='B2A generator checkpoint file')
 
 img = Image.open('./images/scala_madonnina_del_mare.jpeg')
