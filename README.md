@@ -13,7 +13,7 @@ A pretrained cyclegan
 
 ## How to use
 ```python
-net = cyclegan(pretrained='cezanne', **{'topN': 6, 'device':'cpu', 'num_classes': 200})
+net = cyclegan(pretrained='photo2cezanne')
 ```
 
 ## How to train

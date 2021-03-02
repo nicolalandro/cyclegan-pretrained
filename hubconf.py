@@ -1,18 +1,34 @@
 dependencies = ['torch']
 
 import torch
+from cyclegan import Generator
 
-model_url = 'xxxx'
+model_urls = {
+    'img2cezanne': 'https://github.com/nicolalandro/cyclegan_pretrained/releases/download/0.1/netG_B2A_cezanne.pth',
+    'img2vangogh': 'https://github.com/nicolalandro/cyclegan_pretrained/releases/download/0.1/netG_B2A_vangogh.pth',
+    'img2monet': 'https://github.com/nicolalandro/cyclegan_pretrained/releases/download/0.1/netG_B2A_monet.pth',
+}
 
 
-def cyclegan(pretrained=None, **kwargs):
+def cyclegan(pretrained=None, device='cpu'):
     """ # This docstring shows up in hub.help()
     CycleGan model
-    pretrained (string): kwargs, load pretrained weights into the model (vangog2photo)
+    pretrained (string): kwargs, load pretrained weights into the model (img2vangogh)
     **kwargs
         device (str): 'cuda' or 'cpu'
     """
-    net = cyclegan(**kwargs)
-    if pretrained:
-        net.load_state_dict(torch.hub.load_state_dict_from_url(model_url, progress=True))
+    net = Generator(3, 3)
+    if device == 'cuda':
+        net.cuda()
+    net.trained_models_list = [k for k, v in model_urls]
+
+    if pretrained is not None:
+        net.load_state_dict(
+            torch.hub.load_state_dict_from_url(
+                model_urls[pretrained],
+                progress=True,
+                map_location=torch.device(device)
+            )
+        )
+
     return net

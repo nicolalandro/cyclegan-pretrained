@@ -1,10 +1,8 @@
 import argparse
-import urllib
 
 import torch
 import torchvision.transforms as transforms
 from PIL import Image
-from torch.autograd import Variable
 from torchvision.utils import save_image
 
 # fix for python 3.6
@@ -37,18 +35,17 @@ print(opt)
 netG_B2A = Generator(3, 3)
 
 cuda_available = torch.cuda.is_available()
+
+device = torch.device('cpu')
 if cuda_available:
     netG_B2A.cuda()
+    device = torch.device('cuda')
 
 # Load state dicts
-netG_B2A.load_state_dict(torch.load(opt.generator_B2A))
+netG_B2A.load_state_dict(torch.load(opt.generator_B2A, map_location=device))
 
 # Set model's test mode
 netG_B2A.eval()
-
-# Inputs & targets memory allocation
-Tensor = torch.cuda.FloatTensor if cuda_available else torch.Tensor
-input_B = Tensor(1, 3, shape[0], shape[1])
 
 # Dataset loader
 transform_test = transforms.Compose([
@@ -66,11 +63,9 @@ torch_image_B = scaled_img.unsqueeze(0)
 with torch.no_grad():
     if cuda_available:
         torch_image_B = torch_image_B.cuda()
-    # Set model input
-    real_B = Variable(input_B.copy_(torch_image_B))
 
     # Generate output
-    fake_A = 0.5 * (netG_B2A(real_B).data + 1.0)
+    fake_A = 0.5 * (netG_B2A(torch_image_B).data + 1.0)
 
     # Save image files
     save_image(fake_A, 'images/A2.png')
